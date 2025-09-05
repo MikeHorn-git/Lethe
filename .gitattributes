@@ -1,2 +1,3 @@
+.envrc linguist-detectable=false
 Vagrantfile linguist-vendored=false
 Vagrantfile linguist-detectable=true

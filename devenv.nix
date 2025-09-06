@@ -2,17 +2,11 @@
 
 {
   # https://devenv.sh/packages/
-  packages = with pkgs; [
-    git
-    checkmake
-    mdformat
-    nixfmt-classic
-    rubocop
-    vagrant
-  ];
+  packages = with pkgs; [ git checkmake mdformat nixfmt-classic rubocop ];
 
   # https://devenv.sh/languages/
   languages.c.enable = true;
+  languages.shell.enable = true;
 
   # https://devenv.sh/tasks/
   tasks = {
@@ -21,7 +15,9 @@
       git ls-files --cached --others --exclude-standard '*.c' '*.h' | xargs clang-format -i
       mdformat README.md
       nixfmt devenv.nix
-      git ls-files --cached --others --exclude-standard 'Vagrantfile' | xargs rubocop -A'';
+      rubocop -A .
+      git ls-files --cached --others --exclude-standard '*.sh' | xargs shellcheck
+      git ls-files --cached --others --exclude-standard '*.sh' | xargs shfmt -w'';
   };
 
   enterTest = ''
@@ -34,6 +30,8 @@
     clang-format.enable = true;
     mdformat.enable = true;
     nixfmt-classic.enable = true;
+    shellcheck.enable = true;
+    shfmt.enable = true;
     trim-trailing-whitespace.enable = true;
   };
 

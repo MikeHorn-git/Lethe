@@ -1,37 +1,23 @@
-FILES   := '*.c' '*.h'
-IMAGE    = alpine
-VM_DIR   = vagrant
-VM_NAME := Kernel
+VM_DIR   := vagrant
+VMs      := alpine arch debian fedora ubuntu
 
 .DEFAULT_GOAL := help
 .ONESHELL:
 
 help:
-	@echo "Usage: make <target> IMAGE=<image>"
+	@echo "Usage: make <target>"
 	@echo "Targets:"
-	@echo "  help         Display this help message"
-	@echo "  base         Deploy base VM for specified image. Default is Alpine"
-	@echo "  build        Deploy VM and build kernel with defconfig for specified image"
-	@echo "  custom       Deploy VM with misc tools for specified image"
-	@echo "  all          Execute base, build, and custom for specified image"
-	@echo "Example:"
-	@echo "  make build IMAGE=alpine"
+	@printf "  %-10s %s\n" "help"   "Display this help message"
+	@$(foreach vm,$(VMs), printf "  %-10s %s\n" "$(vm)" "Deploy $(vm)";)
+	@printf "  %-10s %s\n" "clean"  "Destroy all VMs"
 
-base:
-	@cd $(VM_DIR)/$(IMAGE)
+$(VMs):
+	@cd $(VM_DIR)/$@
 	@vagrant up
-	@vagrant halt
 
-build:
-	@cd $(VM_DIR)/$(IMAGE)
-	@export VAGRANT_KERNEL=true && vagrant up --provision
-	@vagrant halt
+clean:
+	@for vm in $(VMs); do \
+		(cd $(VM_DIR)/$$vm && vagrant destroy -f); \
+	done
 
-custom:
-	@cd $(VM_DIR)/$(IMAGE)
-	@export VAGRANT_CUSTOM=true && vagrant up --provision
-	@vagrant halt
-
-all: base build custom
-
-.PHONY: help base build custom all clean test
+.PHONY: help $(VMs) clean all test

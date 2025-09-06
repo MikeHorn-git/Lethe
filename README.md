@@ -16,17 +16,21 @@
 
 ## Requirements
 
-- One Provider
+- Make (Optionnal)
+- One [Provider](https://github.com/MikeHorn-git/Lethe#providers)
 - Vagrant
 
 ## Providers
+
+> [!Note]
+> Follow [Default Provider](https://developer.hashicorp.com/vagrant/docs/providers/default) for libvirt.
 
 - Libvirt
 - Virtualbox
 
 ## Plugins
 
-- vagrant-libvirt
+- vagrant-libvirt (Optionnal)
 - vagrant-reload
 
 ## Images
@@ -34,7 +38,7 @@
 - Alpine
 - Arch
 - Debian
-- Gentoo
+- Fedora
 - Ubuntu
 
 ## Installation
@@ -48,15 +52,15 @@ make help
 ## Makefile
 
 ```Makefile
-Usage: make <target> IMAGE=<image>
+Usage: make <target>
 Targets:
-  help         Display this help message
-  base         Deploy base VM for specified image. Default is Alpine
-  build        Deploy VM and build kernel with defconfig for specified image
-  custom       Deploy VM with misc tools for specified image
-  all          Execute base, build, and custom for specified image
-Example:
-  make build IMAGE=alpine
+  help       Display this help message
+  alpine     Deploy alpine
+  arch       Deploy arch
+  debian     Deploy debian
+  fedora     Deploy fedora
+  ubuntu     Deploy ubuntu
+  clean      Destroy VMs
 ```
 
 ## Tree

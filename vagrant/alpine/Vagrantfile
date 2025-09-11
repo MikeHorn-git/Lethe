@@ -39,11 +39,11 @@ Vagrant.configure('2') do |config|
   config.vm.provision 'shell', inline: <<-SHELL, privileged: false
       KERNEL_VERSION="6.15.6"
       # Create an initramfs with new Kernel
-      sudo mkinitfs -o /boot/initramfs 6.11.0/
+      sudo mkinitfs -o /boot/initramfs KERNEL_VERSION
 
       # Update bootloader
       sudo sed -i -e 's|^  LINUX vmlinuz-virt|  LINUX vmlinuz|' -e 's|^  INITRD initramfs-virt|  INITRD initramfs|' /boot/extlinux.conf
       sudo reboot
-    SHELL
+  SHELL
   config.vm.provision :reload
 end

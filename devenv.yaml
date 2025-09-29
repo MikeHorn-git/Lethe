@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://devenv.sh/devenv.schema.json
 inputs:
   nixpkgs:
-    url: github:NixOS/nixpkgs/nixpkgs-unstable # https://github.com/NixOS/nixpkgs/pull/426971
+    url: github:cachix/devenv-nixpkgs/rolling
 
 # If you're using non-OSS software, you can set allowUnfree to true.
 allowUnfree: true # vagrant
@@ -11,5 +11,5 @@ allowUnfree: true # vagrant
 #  - "openssl-1.1.1w"
 
 # If you have more than one devenv you can merge them
-# imports:
-#  - ./backend
+#imports:
+# - ./backend

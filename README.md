@@ -12,7 +12,8 @@
 - [Makefile](https://github.com/MikeHorn-git/Lethe#makefile)
 - [Tree](https://github.com/MikeHorn-git/Lethe#tree)
   - [Src](https://github.com/MikeHorn-git/Lethe#src)
-  - [Modules](https://github.com/MikeHorn-git/Lethe#modules)
+  - [Lkm](https://github.com/MikeHorn-git/Lethe#lkm)
+  - [Bpf](https://github.com/MikeHorn-git/Lethe#bpf)
 
 ## Requirements
 
@@ -21,9 +22,6 @@
 - Vagrant
 
 ## Providers
-
-> [!Note]
-> Follow [Default Provider](https://developer.hashicorp.com/vagrant/docs/providers/default) for libvirt.
 
 - Libvirt
 - Virtualbox
@@ -68,7 +66,7 @@ Targets:
 ### **Src**
 
 > [!Note]
-> In-tree kernel code.
+> In-tree kernel samples.
 
 - **hello syscall**
 - **jiffy syscall**
@@ -86,3 +84,10 @@ Targets:
 - **pid_hide**
 - **port_hide**
 - **revshell**
+
+### **Bpf**
+
+> [!Note]
+> Libbpf and BPF CO-RE eBPF samples.
+
+- **kprobe**

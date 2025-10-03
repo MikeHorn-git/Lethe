@@ -4,4 +4,4 @@ export DEBIAN_FRONTEND=noninteractive
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install bc build-essential bison curl elfutils flex git htop libelf-dev libssl-dev perl strace wget -y
+sudo apt install bc build-essential bison clang curl elfutils flex git htop libelf-dev libssl-dev llvm perl strace wget -y

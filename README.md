@@ -17,8 +17,7 @@
 
 ## Requirements
 
-- Make (Optionnal)
-- One [Provider](https://github.com/MikeHorn-git/Lethe#providers)
+- Provider
 - Vagrant
 
 ## Providers
@@ -28,7 +27,7 @@
 
 ## Plugins
 
-- vagrant-libvirt (Optionnal)
+- [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt) (Optionnal)
 - vagrant-reload
 
 ## Images

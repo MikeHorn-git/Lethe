@@ -1,0 +1,60 @@
+# frozen_string_literal: true
+
+Vagrant.configure('2') do |config|
+  ENV['LC_ALL'] = 'en_US.UTF-8'
+  config.vm.box = 'boxen/fedora-rawhide'
+  config.vm.box_version = '2025.08.20.12'
+
+  config.vm.boot_timeout = 1000
+  config.vm.hostname = 'host'
+
+  config.vm.network 'private_network', type: 'dhcp'
+  config.vm.synced_folder '../../src/bpf', '/home/vagrant/bpf', type: 'rsync'
+  config.vm.synced_folder '../../src/lkm', '/home/vagrant/lkm', type: 'rsync'
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.memory = '4096'
+    libvirt.cpus = '4'
+    libvirt.default_prefix = 'Fedora'
+    libvirt.storage_pool_name = 'default'
+    libvirt.qemu_use_session = false
+    libvirt.keymap = 'en-us'
+  end
+
+  config.vm.provider 'virtualbox' do |vb|
+    vb.memory = '4096'
+    vb.cpus = '4'
+    vb.name = 'Fedora'
+    vb.gui = false
+    vb.check_guest_additions = false
+    vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+  end
+
+  config.vm.provider 'vmware_desktop' do |vmware|
+    vmware.memory = '4096'
+    vmware.cpus = '4'
+    vmware.gui = false
+    vmware.utility_certificate_path = '/opt/vagrant-vmware-desktop/certificates'
+  end
+
+  config.vm.provision 'shell', inline: <<-SHELL, privileged: false
+    sudo dnf update -y
+    sudo dnf install @development-tools -y
+    sudo dnf install @c-development -y
+    sudo dnf install bc rsyslog wget -y
+  SHELL
+  config.vm.provision :reload
+  config.vm.provision 'shell', inline: <<-SHELL, privileged: false
+    KERNEL_VERSION=$(curl -s https://www.kernel.org/releases.json | \
+      grep -A1 '"stable"' | grep '"version"' | head -1 | cut -d '"' -f4)
+    wget --no-verbose https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${KERNEL_VERSION}.tar.xz
+    tar -xf linux-${KERNEL_VERSION}.tar.xz
+    cd linux-${KERNEL_VERSION} || exit
+
+    # Configure & Install Kernel
+    make defconfig
+    make -j"$(nproc)"
+    sudo make modules_install
+    sudo make install
+  SHELL
+end

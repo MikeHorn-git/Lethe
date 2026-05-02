@@ -1,0 +1,10 @@
+AllCops:
+    NewCops: enable
+Metrics/AbcSize:
+  Max: 20
+Metrics/BlockLength:
+  Max: 60
+Metrics/MethodLength:
+  Max: 15
+Style/Documentation:
+  Enabled: false

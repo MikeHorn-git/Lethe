@@ -2,7 +2,11 @@
 
 {
   # https://devenv.sh/packages/
-  packages = with pkgs; [ git gnumake rubyPackages_3_4.rubocop vagrant ];
+  packages = with pkgs; [
+    git
+    rubocop
+    vagrant
+  ];
 
   # https://devenv.sh/languages/
   languages.c.enable = true;
@@ -26,19 +30,19 @@
   # https://devenv.sh/tests/
   enterTest = ''
     make -v
-    rubocop --help
-    vagrant --help
+    rubocop -v
+    vagrant -v
   '';
 
   # https://devenv.sh/git-hooks/
   git-hooks.hooks = {
     clang-format.enable = true;
     mdformat.enable = true;
-    nixfmt-classic.enable = true;
+    nixfmt.enable = true;
     rubocop = {
       enable = true;
       name = "rubocop";
-      entry = "${pkgs.rubyPackages_3_4.rubocop}/bin/rubocop -A";
+      entry = "${pkgs.rubocop}/bin/rubocop -A";
       files = "Vagrantfile$";
     };
     shellcheck.enable = true;

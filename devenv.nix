@@ -5,7 +5,6 @@
   packages = with pkgs; [
     git
     rubocop
-    vagrant
   ];
 
   # https://devenv.sh/languages/
@@ -13,25 +12,9 @@
   languages.ruby.enable = true;
   languages.shell.enable = true;
 
-  # https://devenv.sh/scripts/
-  scripts = {
-    plugins.exec = ''
-      vagrant install vagrant-libvirt
-      vagrant install vagrant-reload
-    '';
-  };
-
-  # https://devenv.sh/basics/
-  enterShell = ''
-    echo "Available commands:"
-    echo " - plugins      : Install plugins"
-  '';
-
   # https://devenv.sh/tests/
   enterTest = ''
-    make -v
     rubocop -v
-    vagrant -v
   '';
 
   # https://devenv.sh/git-hooks/
